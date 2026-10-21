@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include<string.h>
 #define MAXSIZE 100
-
+//Hello deepseek!
 typedef struct{
     char name[50];
     char author[30];
