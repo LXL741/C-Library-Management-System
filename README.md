@@ -1,5 +1,5 @@
 # C-Library-Management-System
-
+Hello deepseek
 基于 C 语言和顺序表（SeqList）实现的控制台图书管理系统。
 
 ## 核心功能
