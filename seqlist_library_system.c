@@ -50,7 +50,7 @@ void FindBook(Seqlist *L,char *name)
         return;
         }
     }
-    printf("error!");
+    printf("error!\n");
 }
 
 int DeleteBook(Seqlist *L,int i)
@@ -73,44 +73,85 @@ int ModifyBook(Seqlist *L,int i,Book newbook)
 
 int main()
 {
-    int m,n;
     Seqlist *L=(Seqlist *)malloc(sizeof(Seqlist));
     InitList(L);
-    for(int i=0;i<2;i++)
+    int choice;
+    while(1)
     {
-        Book a;
-        printf("name:");
-        scanf("%s",&a.name);
-        printf("author:");
-        scanf("%s",&a.author);
-        printf("price:");
-        scanf("%f",&a.price);
-        InsertBook(L,L->length+1,a);
+        printf("\n---Library-Management-System---\n");
+        printf("1.add book\n");
+        printf("2.delete book\n");
+        printf("3.search book\n");
+        printf("4.modify book\n");
+        printf("5.show all books\n");
+        printf("0.out\n");
+        printf("your choice:");
+        scanf("%d",&choice);
+
+        if(choice==0)
+        {
+            printf("exit the system.\n");
+            break;
+        }
+        switch(choice)
+        {
+            case 1:
+            {
+            Book a;
+            printf("name:");
+            scanf("%s",a.name);
+            printf("author:");
+            scanf("%s",a.author);
+            printf("price:");
+            scanf("%f",&a.price);
+            if(InsertBook(L,L->length+1,a))printf("OK\n");
+            else printf("error!");
+            break;
+            }
+            case 2:
+            {
+            int m;
+            printf("the number:");
+            scanf("%d",&m);
+            if(DeleteBook(L,m))printf("OK\n");
+            else printf("error!\n");
+            break; 
+            }
+            case 3:
+            {
+                char name[50];
+                printf("the name:");
+                scanf("%s",name);
+                FindBook(L,name);
+                break;
+            }
+            case 4:
+            {
+                int n;
+                Book newbook;
+                printf("name:");
+                scanf("%s",newbook.name);
+                printf("author:");
+                scanf("%s",newbook.author);
+                printf("price:");
+                scanf("%f",&newbook.price);
+                printf("modify which one:");
+                scanf("%d",&n);
+                if(ModifyBook(L,n,newbook))printf("OK\n");
+                else printf("error!\n");
+                printf("after modify:\n");
+                print(L);
+                break;
+            }
+            case 5:
+            {
+                print(L);
+                break;
+            }
+            default:
+            printf("error!\n");
+        }
     }
-    printf("after insert:");
-    print(L);
-    char searchName[50];
-    printf("find which book:");
-    scanf("%s",searchName);
-    FindBook(L,searchName);
-    printf("delete which one:");
-    scanf("%d",&m);
-    DeleteBook(L,m);
-    printf("after delete:");
-    print(L);
-    Book newbook;
-    printf("--modify--\n");
-    printf("name:");
-    scanf("%s",&newbook.name);
-    printf("author:");
-    scanf("%s",&newbook.author);
-    printf("price:");
-    scanf("%f",&newbook.price);
-    printf("modify which one:");
-    scanf("%d",&n);
-    ModifyBook(L,n,newbook);
-    printf("after modify:");
-    print(L);
     free(L);
     return 0;
 }
