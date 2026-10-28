@@ -74,7 +74,22 @@ int ModifyBook(Seqlist *L,int i,Book newbook)
 int main()
 {
     Seqlist *L=(Seqlist *)malloc(sizeof(Seqlist));
+    if(L==NULL)
+    {
+        printf("error!");
+        return 1;
+    }
     InitList(L);
+    Book b;
+    FILE *fp=fopen("book.txt","r");
+    if(fp != NULL)
+    {
+        while(fscanf(fp,"%s %s %f",b.name,b.author,&b.price)==3)
+        {
+            InsertBook(L,L->length+1,b);
+        }
+        fclose(fp);
+    }
     int choice;
     while(1)
     {
@@ -86,7 +101,12 @@ int main()
         printf("5.show all books\n");
         printf("0.out\n");
         printf("your choice:");
-        scanf("%d",&choice);
+        if(scanf("%d",&choice) != 1)
+                {
+                    printf("please enter the number!\n");
+                    while(getchar() != '\n');
+                    continue;
+                }
 
         if(choice==0)
         {
@@ -103,7 +123,12 @@ int main()
             printf("author:");
             scanf("%s",a.author);
             printf("price:");
-            scanf("%f",&a.price);
+            if(scanf("%f",&a.price) != 1)
+                {
+                    printf("please enter the number!\n");
+                    while(getchar() != '\n');
+                    break;
+                }
             if(InsertBook(L,L->length+1,a))printf("OK\n");
             else printf("error!");
             break;
@@ -112,7 +137,12 @@ int main()
             {
             int m;
             printf("the number:");
-            scanf("%d",&m);
+            if(scanf("%d",&m) != 1)
+                {
+                    printf("please enter the number!\n");
+                    while(getchar() != '\n');
+                    break;
+                }
             if(DeleteBook(L,m))printf("OK\n");
             else printf("error!\n");
             break; 
@@ -136,7 +166,12 @@ int main()
                 printf("price:");
                 scanf("%f",&newbook.price);
                 printf("modify which one:");
-                scanf("%d",&n);
+                if(scanf("%d",&n) != 1)
+                {
+                    printf("please enter the number!\n");
+                    while(getchar() != '\n');
+                    break;
+                }
                 if(ModifyBook(L,n,newbook))printf("OK\n");
                 else printf("error!\n");
                 printf("after modify:\n");
@@ -151,6 +186,15 @@ int main()
             default:
             printf("error!\n");
         }
+    }
+    fp=fopen("book.txt","w");
+    if(fp != NULL)
+    {
+        for(int i=0;i<L->length;i++)
+        {
+            fprintf(fp,"%s %s %.2f\n",L->data[i].name,L->data[i].author,L->data[i].price);
+        }
+        fclose(fp);
     }
     free(L);
     return 0;
