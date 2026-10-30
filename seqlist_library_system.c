@@ -36,7 +36,7 @@ void print(Seqlist *L)
 {
     for(int i=0;i<L->length;i++)
     {
-        printf("%s %s %.2f\n",L->data[i].name,L->data[i].author,L->data[i].price);
+        printf("[%d] %s | %s | %.2f\n", i+1, L->data[i].name, L->data[i].author, L->data[i].price);
     }
 }
 
@@ -119,9 +119,9 @@ int main()
             {
             Book a;
             printf("name:");
-            scanf("%s",a.name);
+            scanf("%49s",a.name);
             printf("author:");
-            scanf("%s",a.author);
+            scanf("%29s",a.author);
             printf("price:");
             if(scanf("%f",&a.price) != 1)
                 {
@@ -151,7 +151,7 @@ int main()
             {
                 char name[50];
                 printf("the name:");
-                scanf("%s",name);
+                scanf("%49s",name);
                 FindBook(L,name);
                 break;
             }
@@ -160,11 +160,16 @@ int main()
                 int n;
                 Book newbook;
                 printf("name:");
-                scanf("%s",newbook.name);
+                scanf("%49s",newbook.name);
                 printf("author:");
-                scanf("%s",newbook.author);
+                scanf("%29s",newbook.author);
                 printf("price:");
-                scanf("%f",&newbook.price);
+                if(scanf("%f",&newbook.price) != 1)
+                {
+                    printf("please enter the number!\n");
+                    while(getchar() != '\n');
+                    break;
+                }
                 printf("modify which one:");
                 if(scanf("%d",&n) != 1)
                 {
