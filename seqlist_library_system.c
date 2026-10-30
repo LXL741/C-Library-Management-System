@@ -84,7 +84,7 @@ int main()
     FILE *fp=fopen("book.txt","r");
     if(fp != NULL)
     {
-        while(fscanf(fp,"%s %s %f",b.name,b.author,&b.price)==3)
+        while(fscanf(fp,"%49s %29s %f",b.name,b.author,&b.price)==3)
         {
             InsertBook(L,L->length+1,b);
         }
